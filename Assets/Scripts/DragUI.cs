@@ -4,15 +4,17 @@ using UnityEngine.UI;
 
 public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public DraggableObject dragObjs;
     [HideInInspector] public GameObject prefabToSpawn;
     [HideInInspector] public Camera sceneCamera;
-
+    private GameObject mowerObject;
     private GameObject previewInstance;
     private Image iconImage;
 
     void Awake()
     {
         iconImage = GetComponentInChildren<Image>();
+        mowerObject = GameObject.Find("Mower");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -28,7 +30,6 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         // Define X–Z plane at fixed Y=0
         Plane xzPlane = new Plane(Vector3.up, new Vector3(0, 0, 0));
 
-        // Ray from camera through mouse
         Ray ray = sceneCamera.ScreenPointToRay(eventData.position);
 
         if (xzPlane.Raycast(ray, out float enter))
@@ -38,8 +39,6 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         }
     }
 
-
-
     public void OnEndDrag(PointerEventData eventData)
     {
         if (previewInstance != null)
@@ -47,10 +46,48 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             Vector3 finalPos = previewInstance.transform.position;
 
             Destroy(previewInstance);
+            GameObject finalInstance = Instantiate(prefabToSpawn, finalPos, Quaternion.identity);
 
-            // Spawn final prefab at release position
-            Instantiate(prefabToSpawn, finalPos, Quaternion.identity);
+            if (!IsTouchingMower(finalInstance))
+            {
+                Debug.Log("Part not touching Mower. Destroying");
+                // CALL REFUND
+                Destroy(finalInstance);
+            }
+            else
+            {
+                finalInstance.transform.parent = mowerObject.transform;
+            }
         }
+    }
+
+    private bool IsTouchingMower(GameObject obj)
+    {
+        if (mowerObject == null)
+        {
+            Debug.LogWarning("Mower object is not assigned!");
+            return false;
+        }
+
+        Collider objCollider = obj.GetComponent<Collider>();
+        if (objCollider == null)
+        {
+            Debug.LogWarning("Spawned object has no collider to check overlaps!");
+            return false;
+        }
+
+        Collider[] mowerColliders = mowerObject.GetComponentsInChildren<Collider>();
+
+        foreach (var mowerCol in mowerColliders)
+        {
+            if (mowerCol.transform.IsChildOf(obj.transform)) continue;
+
+            if (objCollider.bounds.Intersects(mowerCol.bounds))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void MakePreviewTransparent(GameObject obj)
@@ -61,15 +98,13 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             foreach (var mat in r.materials)
             {
                 Color c = mat.color;
-                c.a = 0.5f; // semi-transparent
-
+                c.a = 0.5f;
                 mat.color = c;
 
-                // Ensure transparent shader
                 if (mat.shader.name.Contains("Opaque"))
                 {
                     mat.shader = Shader.Find("Standard");
-                    mat.SetFloat("_Mode", 3); // transparent mode
+                    mat.SetFloat("_Mode", 3); 
                 }
             }
         }

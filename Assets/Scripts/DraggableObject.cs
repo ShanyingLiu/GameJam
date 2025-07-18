@@ -8,20 +8,27 @@ public class DraggableObject : MonoBehaviour
     private bool isDragging = false;
     private float fixedY;
 
+    private GameObject mowerObject;
+
     void Start()
     {
         sceneCamera = Camera.main;
+
+        mowerObject = GameObject.Find("Mower");
+
+        if (mowerObject == null)
+        {
+            Debug.LogError("Could not find mower");
+        }
     }
 
     void OnMouseDown()
     {
         isDragging = true;
 
-        sceneCamera = Camera.main; // make sure sceneCamera is set
-
         fixedY = transform.position.y;
 
-        // Create horizontal X-Z plane at the object's current Y
+        // Create horizontal X-Z plane at object's current Y
         dragPlane = new Plane(Vector3.up, new Vector3(0, fixedY, 0));
 
         Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
@@ -42,9 +49,7 @@ public class DraggableObject : MonoBehaviour
             Vector3 hitPoint = ray.GetPoint(enter);
             Vector3 targetPos = hitPoint + offset;
 
-            // Lock Y coordinate to fixedY
-            targetPos.y = fixedY;
-
+            targetPos.y = fixedY; // lock Y
             transform.position = targetPos;
         }
     }
@@ -52,5 +57,44 @@ public class DraggableObject : MonoBehaviour
     void OnMouseUp()
     {
         isDragging = false;
+
+        if (IsTouchingMower())
+        {
+            Debug.Log("Placement valid: object is touching Mower or its children.");
+            gameObject.transform.parent = mowerObject.transform;
+        }
+        else
+        {
+            Debug.Log("part not touching Mower. Destroying");
+            // CALL REFUND
+            Destroy(gameObject);
+
+        }
     }
+
+    bool IsTouchingMower()
+    {
+        if (mowerObject == null) return false;
+
+        Collider thisCollider = GetComponent<Collider>();
+        if (thisCollider == null)
+        {
+            return false;
+        }
+        Collider[] mowerColliders = mowerObject.GetComponentsInChildren<Collider>();
+
+        foreach (var mowerCol in mowerColliders)
+        {
+            if (mowerCol.transform.IsChildOf(this.transform)) continue;
+
+            if (thisCollider.bounds.Intersects(mowerCol.bounds))
+            {
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
 }

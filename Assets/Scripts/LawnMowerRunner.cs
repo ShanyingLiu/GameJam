@@ -5,47 +5,68 @@ using UnityEngine;
 public class lawnmower_runner : MonoBehaviour
 {
     public Rigidbody body;
-    public float jerk, friction;
-    bool accelerating;
-    public Transform defender;
+    public float acceleration, friction;
+    bool swinging;
+    public Transform[] plugs;
+    public Transform nearest_plug;
+    public float startspeed;
 
     float dot(Vector3 a, Vector3 b){
         return a.x * b.x + a.z * b.z;
     }
 
-    Vector3 lin(Vector3 a, Vector3 b, float v){
-        return a * v + b * (1 - v);
+    Vector3 proj(Vector3 a, Vector3 b){
+        return b * dot(a, b) / dot(b, b);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        body.velocity = new Vector3(1, 0, 0);
+        body.velocity = new Vector3(startspeed, 0, 0);
+        nearest_plug = plugs[0];
     }
 
     void push(){
-        float change = accelerating ? jerk : -friction;
+        float change = swinging ? acceleration : -friction;
         body.AddForce(body.velocity.normalized * change, ForceMode.Acceleration);
     }
 
     void swing(Transform plug){
-        float m = body.mass;
-        float v = body.velocity.magnitude;
-        float r = (plug.position - transform.position).magnitude;
+        push();
+
         Vector3 dir = plug.position - transform.position;
+
+        if (dot(dir, body.velocity) / dot(body.velocity, body.velocity) > 0){
+            return;
+        }
+
+        Vector3 rot = new Vector3(-dir.z, 0, dir.x);
+
+
+        
+
+        float m = body.mass;
+        float v = proj(body.velocity, rot).magnitude;
+        float r = (plug.position - transform.position).magnitude;
         body.AddForce(dir * (m * v * v / r), ForceMode.Acceleration);
     }
     
     // Update is called once per frame
     void FixedUpdate()
     {
-        push();
+        if (swinging){
+            swing(nearest_plug);
+        }
     }
 
     void Update(){
-        accelerating = Input.GetKey(KeyCode.A);
-        if (Input.GetKey(KeyCode.S)){
-            swing(defender);
+        if (Input.GetKey(KeyCode.Space) != swinging){
+            swinging = Input.GetKey(KeyCode.Space);
+            for (int i = 0; i < plugs.Length; ++i){
+                if (Vector3.Distance(transform.position, nearest_plug.position) > Vector3.Distance(transform.position, plugs[i].position)){
+                    nearest_plug = plugs[i];
+                }
+            }
         }
     }
 }
