@@ -32,7 +32,6 @@ public class lawnmower_runner : MonoBehaviour
     }
 
     void swing(Transform plug){
-        push();
 
         Vector3 dir = plug.position - transform.position;
 
@@ -54,6 +53,7 @@ public class lawnmower_runner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        push();
         if (swinging){
             swing(nearest_plug);
         }
