@@ -88,7 +88,7 @@ public class lawnmower_runner : MonoBehaviour
             return;
         }
         body.AddForce(dir * (m * v * v / r), ForceMode.Acceleration);
-        Debug.Log("log");
+        //Debug.Log("log");
     }
 
     float abs(float a){
