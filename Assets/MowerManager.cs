@@ -50,5 +50,10 @@ public class MowerController : MonoBehaviour
             rb.useGravity = true;
             transform.position = Vector3.zero;
         }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+            transform.position = Vector3.zero;
+        }
     }
 }

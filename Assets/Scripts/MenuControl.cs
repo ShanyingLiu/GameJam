@@ -36,7 +36,10 @@ public class MenuControl : MonoBehaviour
                 iconImage.sprite = prefabIcons[i];
                 iconImage.preserveAspect = true;
             }
-            DragUI dragScript = newButtonObj.AddComponent<DragUI>();
+            DragUI dragScript = newButtonObj.GetComponent<DragUI>();
+            if (dragScript == null)
+                dragScript = newButtonObj.AddComponent<DragUI>();
+
             dragScript.prefabToSpawn = prefabs[i];
             dragScript.sceneCamera = sceneCamera;
 
