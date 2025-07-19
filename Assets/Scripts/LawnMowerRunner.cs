@@ -28,7 +28,7 @@ public class lawnmower_runner : MonoBehaviour
     void Start()
     {
         FindPlugs();
-        body.velocity = new Vector3(startspeed, 0, 0);
+        body.velocity = new Vector3(-startspeed, 0, 0);
         if (plugs.Length > 0)
             nearest_plug = plugs[0];
         else
@@ -88,6 +88,7 @@ public class lawnmower_runner : MonoBehaviour
             return;
         }
         body.AddForce(dir * (m * v * v / r), ForceMode.Acceleration);
+        Debug.Log("log");
     }
 
     float abs(float a){
@@ -122,6 +123,14 @@ public class lawnmower_runner : MonoBehaviour
         if (body.velocity.magnitude > 0.5){
             //turn();
         }
+        if (swinging && nearest_plug != null){
+            randy.SetPosition(0, transform.position);
+            randy.SetPosition(1, nearest_plug.position);
+        }
+        else{
+            randy.SetPosition(0, transform.position);
+            randy.SetPosition(1, transform.position);
+        }
     }
 
     void Update(){
@@ -141,13 +150,6 @@ public class lawnmower_runner : MonoBehaviour
                 nearest_plug = null;
             }
         }
-        if (swinging && nearest_plug != null){
-            randy.SetPosition(0, transform.position);
-            randy.SetPosition(1, nearest_plug.position);
-        }
-        else{
-            randy.SetPosition(0, transform.position);
-            randy.SetPosition(1, transform.position);
-        }
+        
     }
 }
