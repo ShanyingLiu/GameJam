@@ -5,14 +5,13 @@ using UnityEngine.UI;
 public class MenuControl : MonoBehaviour
 {
     [Header("Prefabs & Icons")]
-    public List<GameObject> prefabs;       // List of prefabs
-    public List<Sprite> prefabIcons;       // Icons matching prefabs
+    public List<GameObject> prefabs;      
+    public List<Sprite> prefabIcons;  
 
     [Header("UI References")]
-    public GameObject buttonPrefab;        // UI Button prefab
-    public Transform contentParent;        // Scroll View Content
-    public Camera sceneCamera;             // Your orthographic/perspective camera
-
+    public GameObject buttonPrefab; 
+    public Transform contentParent;
+    public Camera sceneCamera;
     void Start()
     {
         PopulateMenu();
@@ -37,13 +36,10 @@ public class MenuControl : MonoBehaviour
                 iconImage.sprite = prefabIcons[i];
                 iconImage.preserveAspect = true;
             }
-
-            // Add drag script dynamically & set references
             DragUI dragScript = newButtonObj.AddComponent<DragUI>();
             dragScript.prefabToSpawn = prefabs[i];
             dragScript.sceneCamera = sceneCamera;
 
-            // Keep your existing click logic if needed
             int index = i;
             newButton.onClick.AddListener(() => OnPrefabSelected(index));
         }
@@ -52,6 +48,5 @@ public class MenuControl : MonoBehaviour
     void OnPrefabSelected(int index)
     {
         Debug.Log("Clicked prefab: " + prefabs[index].name);
-        // optional: handle non-drag click
     }
 }

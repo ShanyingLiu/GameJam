@@ -11,6 +11,28 @@ public class lawnmower_runner : MonoBehaviour
     public Transform nearest_plug;
     public float startspeed;
 
+
+    public GameObject playermodel;
+    GameObject viewcopy;
+
+    public void begin()
+    {
+        playermodel = GameObject.Find("Mower(Clone)");
+
+        if (viewcopy != null)
+        {
+            Destroy(viewcopy);
+        }
+        //viewcopy = Instantiate(playermodel);
+        viewcopy = playermodel;
+        viewcopy.transform.SetParent(transform, false);
+        viewcopy.transform.localPosition = Vector3.zero;
+        viewcopy.transform.localRotation = Quaternion.identity;
+        viewcopy.transform.localScale = Vector3.one;
+
+    }
+
+
     float dot(Vector3 a, Vector3 b){
         return a.x * b.x + a.z * b.z;
     }
@@ -24,6 +46,7 @@ public class lawnmower_runner : MonoBehaviour
     {
         body.velocity = new Vector3(startspeed, 0, 0);
         nearest_plug = plugs[0];
+        begin();
     }
 
     void push(){
