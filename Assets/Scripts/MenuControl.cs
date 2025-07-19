@@ -15,9 +15,17 @@ public class MenuControl : MonoBehaviour
     public GameObject priceLabelPrefab; // TMP prefab
     public Transform contentParent;
     public Camera sceneCamera;
+    public GameObject errorBackground; // Drag your ErrorBackground UI object here
+    public Button clearAllButton;     // Drag your ClearAll UI button here
 
     void Start()
     {
+        if (errorBackground != null)
+            errorBackground.SetActive(false);
+
+        if (clearAllButton != null)
+            clearAllButton.onClick.AddListener(ClearAllChildren);
+
         PopulateMenu();
     }
 
@@ -31,7 +39,6 @@ public class MenuControl : MonoBehaviour
 
         for (int i = 0; i < prefabs.Count; i++)
         {
-            // Create a container under contentParent
             GameObject container = new GameObject($"Item_{i}", typeof(RectTransform));
             container.transform.SetParent(contentParent, false);
 
@@ -42,7 +49,6 @@ public class MenuControl : MonoBehaviour
             ContentSizeFitter fitter = container.AddComponent<ContentSizeFitter>();
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            // Create button
             GameObject newButtonObj = Instantiate(buttonPrefab, container.transform);
             Button newButton = newButtonObj.GetComponent<Button>();
             Image iconImage = newButtonObj.GetComponentInChildren<Image>();
@@ -53,7 +59,6 @@ public class MenuControl : MonoBehaviour
                 iconImage.preserveAspect = true;
             }
 
-            // Add drag script
             DragUI dragScript = newButtonObj.GetComponent<DragUI>();
             if (dragScript == null)
                 dragScript = newButtonObj.AddComponent<DragUI>();
@@ -61,16 +66,31 @@ public class MenuControl : MonoBehaviour
             dragScript.prefabToSpawn = prefabs[i];
             dragScript.sceneCamera = sceneCamera;
             dragScript.price = prefabPrices[i];
+            dragScript.errorBackground = errorBackground; // pass the reference
 
             int index = i;
             newButton.onClick.AddListener(() => OnPrefabSelected(index));
 
-            // Create price label inside container, under button
             GameObject priceLabelObj = Instantiate(priceLabelPrefab, container.transform);
             TextMeshProUGUI priceText = priceLabelObj.GetComponent<TextMeshProUGUI>();
             if (priceText != null)
             {
                 priceText.text = $"${prefabPrices[i]}";
+            }
+        }
+    }
+
+    void ClearAllChildren()
+    {
+        GameObject mower = GameObject.Find("Mower");
+        if (mower != null)
+        {
+            foreach (Transform child in mower.transform)
+            {
+                if (child.name != "Mower")
+                {
+                    Destroy(child.gameObject);
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class lawnmower_runner : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class lawnmower_runner : MonoBehaviour
     public float spinspeed = 2;
     public LineRenderer randy;
 
-
     float dot(Vector3 a, Vector3 b){
         return a.x * b.x + a.z * b.z;
     }
@@ -26,6 +26,31 @@ public class lawnmower_runner : MonoBehaviour
     }
 
     void Start()
+    {
+        FindPlugs();
+        body.velocity = new Vector3(startspeed, 0, 0);
+        if (plugs.Length > 0)
+            nearest_plug = plugs[0];
+        else
+            nearest_plug = null;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindPlugs();
+        if (plugs.Length > 0)
+            nearest_plug = plugs[0];
+        else
+            nearest_plug = null;
+    }
+
+    void FindPlugs()
     {
         GameObject plugsParent = GameObject.Find("Plugs");
         if (plugsParent != null)
@@ -37,8 +62,10 @@ public class lawnmower_runner : MonoBehaviour
             }
             plugs = children.ToArray();
         }
-        body.velocity = new Vector3(startspeed, 0, 0);
-        nearest_plug = plugs[0];
+        else
+        {
+            plugs = new Transform[0];
+        }
     }
 
     void push(){
@@ -47,6 +74,7 @@ public class lawnmower_runner : MonoBehaviour
     }
 
     void swing(Transform plug){
+        if (plug == null) return;
         Vector3 dir = plug.position - transform.position;
         if (dot(dir, body.velocity) / dot(body.velocity, body.velocity) > 0){
             return;
@@ -63,12 +91,9 @@ public class lawnmower_runner : MonoBehaviour
     }
 
     float abs(float a){
-        if (a < 0){
-            return -a;
-        }
-        return a;
+        return a < 0 ? -a : a;
     }
-    
+
     void turn(){
         if (abs(dot(transform.forward, body.velocity) / dot(body.velocity, body.velocity)) < 0.05){
             body.AddTorque(-body.angularVelocity);
@@ -85,11 +110,13 @@ public class lawnmower_runner : MonoBehaviour
     void FixedUpdate()
     {
         push();
-        if (swinging){
+        if (swinging && nearest_plug != null)
+        {
             swing(nearest_plug);
         }
-        
-        if (body.velocity.magnitude > maxspeed){
+
+        if (body.velocity.magnitude > maxspeed)
+        {
             body.velocity = body.velocity.normalized * maxspeed;
         }
         if (body.velocity.magnitude > 0.5){
@@ -98,16 +125,23 @@ public class lawnmower_runner : MonoBehaviour
     }
 
     void Update(){
-        
         if (Input.GetKey(KeyCode.Space) != swinging){
             swinging = Input.GetKey(KeyCode.Space);
-            for (int i = 0; i < plugs.Length; ++i){
-                if (Vector3.Distance(transform.position, nearest_plug.position) > Vector3.Distance(transform.position, plugs[i].position)){
-                    nearest_plug = plugs[i];
+            if (plugs.Length > 0)
+            {
+                nearest_plug = plugs[0];
+                for (int i = 1; i < plugs.Length; ++i){
+                    if (Vector3.Distance(transform.position, nearest_plug.position) > Vector3.Distance(transform.position, plugs[i].position)){
+                        nearest_plug = plugs[i];
+                    }
                 }
             }
+            else
+            {
+                nearest_plug = null;
+            }
         }
-        if (swinging){
+        if (swinging && nearest_plug != null){
             randy.SetPosition(0, transform.position);
             randy.SetPosition(1, nearest_plug.position);
         }

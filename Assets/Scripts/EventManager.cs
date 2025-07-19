@@ -38,6 +38,7 @@ public class EventManager : MonoBehaviour
         FindAndBindButton("StartButton", LoadNextScene);
         FindAndBindButton("StartRun", LoadRunMowerScene);
         FindAndBindButton("Creation", LoadCreationScene);
+        FindAndBindButton("ReturnHome", LoadStartScreenScene);
         UpdateMoneyDisplay();
     }
 
@@ -78,8 +79,7 @@ public class EventManager : MonoBehaviour
             TMP_Text tmp = moneyTextObj.GetComponent<TMP_Text>();
             if (tmp != null)
             {
-                tmp.text = "$ ";
-                tmp.text += money.ToString();
+                tmp.text = "$ " + money.ToString();
             }
         }
         else
@@ -110,5 +110,10 @@ public class EventManager : MonoBehaviour
     public void LoadRunMowerScene()
     {
         SceneManager.LoadScene("RunMower");
+    }
+
+    public void LoadStartScreenScene()
+    {
+        SceneManager.LoadScene("StartScreen");
     }
 }

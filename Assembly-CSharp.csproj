@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/EventManager.cs" />
     <Compile Include="Assets/Scripts/DragUI.cs" />
+    <Compile Include="Assets/RunLevelManager.cs" />
     <Compile Include="Assets/Scripts/DraggableObject.cs" />
     <Compile Include="Assets/MowerManager.cs" />
     <Compile Include="Assets/CameraManager.cs" />
