@@ -6,6 +6,8 @@ public class MowerController : MonoBehaviour
     public static GameObject Instance;
     private lawnmower_runner runner;
     private Rigidbody rb;
+    private ParticleSystem[] particleSystems;
+    private bool particlesEnabled = false;
 
     void Awake()
     {
@@ -16,6 +18,7 @@ public class MowerController : MonoBehaviour
 
             runner = GetComponent<lawnmower_runner>();
             rb = GetComponent<Rigidbody>();
+            particleSystems = GetComponentsInChildren<ParticleSystem>();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
             UpdateRunnerState(SceneManager.GetActiveScene().name);
@@ -23,6 +26,27 @@ public class MowerController : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if (rb == null || particleSystems == null || particleSystems.Length == 0)
+            return;
+
+        bool shouldEnable = rb.velocity.magnitude > 2.5f;
+        if (shouldEnable != particlesEnabled)
+        {
+            particlesEnabled = shouldEnable;
+            foreach (var ps in particleSystems)
+            {
+                var emission = ps.emission;
+                emission.enabled = particlesEnabled;
+                if (particlesEnabled && !ps.isPlaying)
+                    ps.Play();
+                else if (!particlesEnabled && ps.isPlaying)
+                    ps.Stop();
+            }
         }
     }
 
@@ -53,7 +77,6 @@ public class MowerController : MonoBehaviour
         else
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
-            //transform.position = Vector3.zero;
         }
     }
 }

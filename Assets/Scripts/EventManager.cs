@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class EventManager : MonoBehaviour
 {
-    private static EventManager instance;
+    public static EventManager instance;
+
+    public int money = 10;
 
     void Awake()
     {
@@ -32,20 +35,10 @@ public class EventManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        /*if (scene.name == "RunMower")
-        {
-            GameObject playermodel = GameObject.Find("Mower");
-            GameObject lawnmowerrunner = GameObject.Find("MowerRunner");
-            if(!playermodel){ Debug.Log("playermodel null"); }
-            if(!lawnmowerrunner){ Debug.Log("mowerrunner null"); }
-
-
-            Instantiate(playermodel, lawnmowerrunner.transform);
-        }*/
-
         FindAndBindButton("StartButton", LoadNextScene);
         FindAndBindButton("StartRun", LoadRunMowerScene);
         FindAndBindButton("Creation", LoadCreationScene);
+        UpdateMoneyDisplay();
     }
 
     void FindAndBindButton(string buttonName, UnityEngine.Events.UnityAction action)
@@ -71,6 +64,30 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    public void AddMoney(int amount)
+    {
+        money += amount;
+        UpdateMoneyDisplay();
+    }
+
+    void UpdateMoneyDisplay()
+    {
+        GameObject moneyTextObj = GameObject.Find("Money");
+        if (moneyTextObj != null)
+        {
+            TMP_Text tmp = moneyTextObj.GetComponent<TMP_Text>();
+            if (tmp != null)
+            {
+                tmp.text = "$ ";
+                tmp.text += money.ToString();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Money text object not found");
+        }
+    }
+
     public void LoadNextScene()
     {
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
@@ -93,6 +110,5 @@ public class EventManager : MonoBehaviour
     public void LoadRunMowerScene()
     {
         SceneManager.LoadScene("RunMower");
-        
     }
 }
