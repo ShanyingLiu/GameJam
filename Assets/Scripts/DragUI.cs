@@ -20,7 +20,7 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     public void OnBeginDrag(PointerEventData eventData)
     {
         previewInstance = Instantiate(prefabToSpawn);
-        MakePreviewTransparent(previewInstance);
+        //MakePreviewTransparent(previewInstance);
     }
 
     public void OnDrag(PointerEventData eventData)

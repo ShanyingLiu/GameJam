@@ -53,7 +53,7 @@ public class MowerController : MonoBehaviour
         else
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
-            transform.position = Vector3.zero;
+            //transform.position = Vector3.zero;
         }
     }
 }

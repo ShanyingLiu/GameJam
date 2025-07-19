@@ -25,7 +25,7 @@ public class DraggableObject : MonoBehaviour
     void OnMouseDown()
     {
         isDragging = true;
-        if (Input.GetMouseButtonDown(0)) Debug.Log("Mouse down detected");
+
         fixedY = transform.position.y;
 
         // Create horizontal X-Z plane at object's current Y
@@ -61,7 +61,11 @@ public class DraggableObject : MonoBehaviour
         if (IsTouchingMower())
         {
             Debug.Log("Placement valid: object is touching Mower or its children.");
+            //gameObject.transform.parent = mowerObject.transform;
+            Debug.Log("Before parenting: " + gameObject.layer + ", collider enabled: " + GetComponent<Collider>().enabled);
             gameObject.transform.parent = mowerObject.transform;
+            Debug.Log("After parenting: " + gameObject.layer + ", collider enabled: " + GetComponent<Collider>().enabled);
+
         }
         else
         {

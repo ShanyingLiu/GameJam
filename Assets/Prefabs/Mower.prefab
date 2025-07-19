@@ -203,9 +203,9 @@ MonoBehaviour:
   friction: 1
   plugs: []
   nearest_plug: {fileID: 0}
-  startspeed: 2
+  startspeed: 3
   maxspeed: 7
-  maxdist: 0.1
+  maxdist: 1
 --- !u!96 &8835638383780546431
 TrailRenderer:
   serializedVersion: 3
