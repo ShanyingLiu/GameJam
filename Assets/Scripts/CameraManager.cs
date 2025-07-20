@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CameraManager : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class CameraManager : MonoBehaviour
 
     private float initialY;
     private float initialZ;
+    public RunLevelManager manager;
 
     bool picked = false;
 
@@ -24,6 +27,7 @@ public class CameraManager : MonoBehaviour
     }
 
     public void level_picked(){
+        manager.StartTimer();
         transform.position = new Vector3(0f, 5.5f, -1f);
         Destroy(map1);
         Destroy(map2);
