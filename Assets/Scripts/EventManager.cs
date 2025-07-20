@@ -6,6 +6,7 @@ using TMPro;
 public class EventManager : MonoBehaviour
 {
     public static EventManager instance;
+    public bool largerMowerUsed = false;
 
     public int money = 10;
 

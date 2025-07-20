@@ -7,6 +7,7 @@ public class BreakPart : MonoBehaviour
     public float partStrength = 0.0f;
     private float forceStrength = 5f;
     private bool hasBroken = false;
+    private float originalThickness = 1f;
 
     void Awake()
     {
@@ -21,6 +22,22 @@ public class BreakPart : MonoBehaviour
         {
             col.isTrigger = true;
         }
+
+        if (gameObject.name.Contains("Bigger"))
+        {
+            Debug.Log("Bigger created!!");
+
+            GameObject mowerRoot = GameObject.Find("Mower");
+            if (mowerRoot != null)
+            {
+                TrailRenderer lr = mowerRoot.GetComponent<TrailRenderer>();
+                originalThickness = lr.startWidth;
+                lr.startWidth += 1.0f;
+                lr.endWidth += 1.0f;
+
+            }
+
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -31,6 +48,7 @@ public class BreakPart : MonoBehaviour
         if (hasBroken) return;
 
         if (other.gameObject.name == "Mower") return;
+        if (other.gameObject.name == "GroundPlane") return;
 
         if (Random.value < (breakChance - partStrength)) // if part is stronger it will be less likely to break
         {
@@ -48,6 +66,25 @@ public class BreakPart : MonoBehaviour
 
         Vector3 randomDir = Random.onUnitSphere;
         rb.AddForce(randomDir * forceStrength, ForceMode.Impulse);
+
+        if (gameObject.name.Contains("Bigger"))
+        {
+            GameObject mowerRoot = GameObject.Find("Mower");
+            if (mowerRoot != null)
+            {
+                TrailRenderer lr = mowerRoot.GetComponent<TrailRenderer>();
+                lr.startWidth = originalThickness;
+                lr.endWidth = originalThickness;
+
+            }
+
+            var eventManager = FindObjectOfType<EventManager>();
+            if (eventManager != null)
+            {
+                eventManager.largerMowerUsed = true;
+            }
+
+        }
 
         Destroy(gameObject, 2f);
     }

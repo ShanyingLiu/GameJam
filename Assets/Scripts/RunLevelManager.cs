@@ -138,18 +138,26 @@ public class RunLevelManager : MonoBehaviour
             int areaCovered = 100;
 
             if (areagetter != null) { areaCovered = (int)areagetter.getscore(); }
-            Debug.Log(areaCovered);
 
             if (AreaCovered != null)
             {
+                var eventManager = FindObjectOfType<EventManager>();
+                if (eventManager != null)
+                {
+                    if (eventManager.largerMowerUsed == true)
+                    {
+                        areaCovered += 50;
+                    }
+                }
                 AreaCovered.text = $"Area Covered: {areaCovered}";
             }
             if (MoneyEarned != null)
             {
+                var eventManager = FindObjectOfType<EventManager>();
                 int moneyEarned = (int)elapsedTime / 5;
                 moneyEarned += (int)areaCovered / 50 * 2;
                 MoneyEarned.text = $"Funds Increased: ${moneyEarned}";
-                var eventManager = FindObjectOfType<EventManager>();
+                
                 if (eventManager != null)
                 {
                     eventManager.AddMoney(moneyEarned);

@@ -70,6 +70,7 @@
     <Compile Include="Assets/Scripts/DragUI.cs" />
     <Compile Include="Assets/Scripts/PlugHolder.cs" />
     <Compile Include="Assets/Scripts/RunLevelManager.cs" />
+    <Compile Include="Assets/Scripts/ShowOnce.cs" />
     <Compile Include="Assets/Scripts/MowerManager.cs" />
     <Compile Include="Assets/Scripts/DraggableObject.cs" />
     <Compile Include="Assets/Scripts/MenuControl.cs" />

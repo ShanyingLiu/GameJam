@@ -109,8 +109,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.159, y: 0.11399999, z: 0.31599998}
-  m_Center: {x: 0, y: 0.056999996, z: 0}
+  m_Size: {x: 0.159, y: 0.11399999, z: 0.24888924}
+  m_Center: {x: 0, y: 0.056999996, z: 0.0050342567}
 --- !u!1 &4544456369453661599
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,8 +165,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2658797, y: 0.24004757, z: 0.57128614}
-  m_Center: {x: -0.2715039, y: -0.008118898, z: -0.0000011622906}
+  m_Size: {x: 0.3023979, y: 0.24004757, z: 0.4885742}
+  m_Center: {x: -0.2897631, y: -0.008118898, z: 0.0025370717}
 --- !u!1 &6447602609242644876
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +418,7 @@ MonoBehaviour:
   maxdist: 2
   spinspeed: 2
   randy: {fileID: 6848809745862344989}
+  paused: 0
 --- !u!120 &6848809745862344989
 LineRenderer:
   serializedVersion: 2
@@ -5896,8 +5897,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3180001, y: 0.11399999, z: 0.15800004}
-  m_Center: {x: 0.000000007450582, y: 0.056999996, z: 0}
+  m_Size: {x: 0.3180001, y: 0.11399999, z: 0.092475384}
+  m_Center: {x: 0.000000014901161, y: 0.056999996, z: 0.0011521894}
 --- !u!1001 &3115731338984803368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6246,8 +6247,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3180001, y: 0.11399999, z: 0.15800004}
-  m_Center: {x: 0.000000007450582, y: 0.056999996, z: 0}
+  m_Size: {x: 0.22826828, y: 0.11399999, z: 0.11415197}
+  m_Center: {x: 0.0042340234, y: 0.056999996, z: -0.021924041}
 --- !u!4 &5544820128158049552 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 676f86b1fb6724e929d17bad52e0182e, type: 3}
@@ -6345,8 +6346,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3180001, y: 0.11399999, z: 0.15800004}
-  m_Center: {x: 0.000000007450582, y: 0.056999996, z: 0}
+  m_Size: {x: 0.3180001, y: 0.11399999, z: 0.09310756}
+  m_Center: {x: 0.000000014901161, y: 0.056999996, z: -0.0007948838}
 --- !u!4 &6637080065077603685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 676f86b1fb6724e929d17bad52e0182e, type: 3}

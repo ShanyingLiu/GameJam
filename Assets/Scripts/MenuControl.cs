@@ -2,21 +2,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class MenuControl : MonoBehaviour
 {
     [Header("Prefabs & Icons")]
-    public List<GameObject> prefabs;      
-    public List<Sprite> prefabIcons;  
+    public List<GameObject> prefabs;
+    public List<Sprite> prefabIcons;
     public List<int> prefabPrices;
 
+    [Header("Prefab Descriptions")]
+    public List<GameObject> prefabDescs; // Drag your UI description objects here in order
+
     [Header("UI References")]
-    public GameObject buttonPrefab; 
-    public GameObject priceLabelPrefab; 
+    public GameObject buttonPrefab;
+    public GameObject priceLabelPrefab;
     public Transform contentParent;
     public Camera sceneCamera;
-    public GameObject errorBackground; 
-    public Button clearAllButton; 
+    public GameObject errorBackground;
+    public Button clearAllButton;
+
     void Start()
     {
         if (errorBackground != null)
@@ -28,7 +33,7 @@ public class MenuControl : MonoBehaviour
         PopulateMenu();
     }
 
-   void PopulateMenu()
+    void PopulateMenu()
     {
         if (prefabs.Count != prefabIcons.Count || prefabs.Count != prefabPrices.Count)
         {
@@ -42,12 +47,12 @@ public class MenuControl : MonoBehaviour
             container.transform.SetParent(contentParent, false);
 
             RectTransform containerRect = container.GetComponent<RectTransform>();
-            containerRect.sizeDelta = new Vector2(275, 275); 
+            containerRect.sizeDelta = new Vector2(275, 275);
 
             VerticalLayoutGroup layout = container.AddComponent<VerticalLayoutGroup>();
             layout.childAlignment = TextAnchor.MiddleCenter;
             layout.spacing = 10;
-            layout.padding = new RectOffset(10, 10, 10, 10); 
+            layout.padding = new RectOffset(10, 10, 10, 10);
 
             GameObject newButtonObj = Instantiate(buttonPrefab, container.transform);
             Button newButton = newButtonObj.GetComponent<Button>();
@@ -74,12 +79,53 @@ public class MenuControl : MonoBehaviour
             int index = i;
             newButton.onClick.AddListener(() => OnPrefabSelected(index));
 
+            // Add event triggers for hover
+            EventTrigger trigger = newButtonObj.AddComponent<EventTrigger>();
+
+            EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+            entryEnter.eventID = EventTriggerType.PointerEnter;
+            //entryEnter.callback.AddListener((data) => { ShowOnlyPrefabDesc(index); });
+            entryEnter.callback.AddListener((data) => {
+                //Debug.Log("Pointer entered button " + index);
+                ShowOnlyPrefabDesc(index);
+            });
+            
+
+            trigger.triggers.Add(entryEnter);
+
+            EventTrigger.Entry entryExit = new EventTrigger.Entry();
+            entryExit.eventID = EventTriggerType.PointerExit;
+            //entryExit.callback.AddListener((data) => { HideAllPrefabDescs(); });
+            entryExit.callback.AddListener((data) => {
+                //Debug.Log("Pointer exited button " + index);
+                HideAllPrefabDescs();
+            });
+            trigger.triggers.Add(entryExit);
+
             GameObject priceLabelObj = Instantiate(priceLabelPrefab, container.transform);
             TextMeshProUGUI priceText = priceLabelObj.GetComponent<TextMeshProUGUI>();
             if (priceText != null)
             {
                 priceText.text = $"${prefabPrices[i]}";
             }
+        }
+    }
+
+    void ShowOnlyPrefabDesc(int index)
+    {
+        for (int j = 0; j < prefabDescs.Count; j++)
+        {
+            if (prefabDescs[j] != null)
+                prefabDescs[j].SetActive(j == index);
+        }
+    }
+
+    void HideAllPrefabDescs()
+    {
+        foreach (var desc in prefabDescs)
+        {
+            if (desc != null)
+                desc.SetActive(false);
         }
     }
 
