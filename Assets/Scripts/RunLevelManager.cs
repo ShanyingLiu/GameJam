@@ -40,7 +40,7 @@ public class RunLevelManager : MonoBehaviour
     {
         
         elapsedTime = 0f;
-        ended = false;
+        ended = true;
         FindMowerRoot();
         CancelInvoke(nameof(CheckMowerChildrenAndEnd));
         if (scene.name == "RunMower")
@@ -128,7 +128,7 @@ public class RunLevelManager : MonoBehaviour
 
             }
 
-            ended = true;
+            ended = false;
 
             if (EndTime != null)
             {
