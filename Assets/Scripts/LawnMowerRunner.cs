@@ -16,6 +16,14 @@ public class lawnmower_runner : MonoBehaviour
     public float maxdist = 3;
     public float spinspeed = 2;
     public LineRenderer randy;
+    public bool paused = false;
+
+    public void pause(){
+        body.AddForce(-body.velocity);
+        body.AddTorque(-body.angularVelocity);
+        paused = true;
+        swinging = false;
+    }
 
     float dot(Vector3 a, Vector3 b){
         return a.x * b.x + a.z * b.z;
@@ -43,6 +51,7 @@ public class lawnmower_runner : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        paused = false;
         FindPlugs();
         if (plugs.Length > 0)
             nearest_plug = plugs[0];
@@ -110,6 +119,7 @@ public class lawnmower_runner : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         push();
         if (swinging && nearest_plug != null)
         {
@@ -131,10 +141,13 @@ public class lawnmower_runner : MonoBehaviour
             randy.SetPosition(0, transform.position);
             randy.SetPosition(1, transform.position);
         }
+        if (paused){
+            pause();
+        }
     }
 
     void Update(){
-        if (Input.GetKey(KeyCode.Space) != swinging){
+        if (Input.GetKey(KeyCode.Space) != swinging && !paused){
             swinging = Input.GetKey(KeyCode.Space);
             if (plugs.Length > 0)
             {

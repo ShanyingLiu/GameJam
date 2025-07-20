@@ -121,6 +121,13 @@ public class RunLevelManager : MonoBehaviour
 
         if (count <= 8 && !ended)
         {
+
+            if (mowerRoot != null)
+            {
+                mowerRoot.transform.position = new Vector3(1000, 0, 1000);
+
+            }
+
             ended = true;
 
             if (EndTime != null)
