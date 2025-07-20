@@ -117,19 +117,19 @@ public class RunLevelManager : MonoBehaviour
                 EndTime.text = $"Your Time: {elapsedTime:F1}s";
             }
             var areagetter = FindObjectOfType<areacovered>();
-            float areaCovered = 100;
+            int areaCovered = 100;
 
-            if (areagetter != null) { areaCovered = areagetter.getscore(); }
+            if (areagetter != null) { areaCovered = (int)areagetter.getscore(); }
             Debug.Log(areaCovered);
 
             if (AreaCovered != null)
             {
-                AreaCovered.text = $"Area Covered: ${areaCovered}";
+                AreaCovered.text = $"Area Covered: {areaCovered}";
             }
             if (MoneyEarned != null)
             {
-                int moneyEarned = (int)elapsedTime / 5 * 2;
-                moneyEarned += (int)areaCovered / 100 * 2;
+                int moneyEarned = (int)elapsedTime / 5;
+                moneyEarned += (int)areaCovered / 50 * 2;
                 MoneyEarned.text = $"Funds Increased: ${moneyEarned}";
                 var eventManager = FindObjectOfType<EventManager>();
                 if (eventManager != null)
@@ -193,39 +193,58 @@ public class RunLevelManager : MonoBehaviour
         }
     }
     private void RefreshMowerChildrenFromPrefab()
-    {
+{
+    Debug.Log("=== REFRESH CHILDREN CALLED ===");
     FindMowerRoot();
     if (mowerPrefab == null || mowerRoot == null)
     {
+        Debug.LogWarning("Cannot refresh mower: prefab or mowerRoot missing.");
         return;
     }
 
+    // Clear existing children
     while (mowerRoot.transform.childCount > 0)
     {
         DestroyImmediate(mowerRoot.transform.GetChild(0).gameObject);
     }
 
+    // Instantiate the prefab
     GameObject temp = Instantiate(mowerPrefab);
     temp.SetActive(true);
 
-    Transform innerMower = temp.transform.Find("mower");
+    // Find the inner "mower" object in the instantiated prefab
+    Transform innerMower = temp.transform.Find("mower"); // Adjust name if different
     if (innerMower == null)
     {
+        // If it's the first child, get it directly
         innerMower = temp.transform.GetChild(0);
+        Debug.Log($"Using first child as inner mower: {innerMower.name}");
+    }
+    else
+    {
+        Debug.Log($"Found inner mower: {innerMower.name}");
     }
 
+    // Move children from the INNER mower to our mowerRoot
     List<Transform> childrenToMove = new List<Transform>();
     foreach (Transform child in innerMower)
     {
+        Debug.Log($"Found child to move: {child.name}");
         childrenToMove.Add(child);
     }
 
     foreach (Transform child in childrenToMove)
     {
-        child.SetParent(mowerRoot.transform, false);
+        Debug.Log($"Moving child: {child.name} to mowerRoot");
+        child.SetParent(mowerRoot.transform, false); // Keep local transforms
         child.gameObject.SetActive(true);
     }
 
+    // Clean up
     DestroyImmediate(temp);
-    }
+    
+    Debug.Log($"Final mowerRoot children count: {mowerRoot.transform.childCount}");
+    Debug.Log("=== REFRESH COMPLETE ===");
+}
+
 }

@@ -151,13 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a03e1fcb8674ba0965920132d8d22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 0
-  spacing: 0
+  size: 20
+  spacing: 1
   area: 0
   origin: {x: -5, y: -0.28, z: 2}
   player:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   red: {fileID: 0}
 --- !u!4 &4694301
 Transform:

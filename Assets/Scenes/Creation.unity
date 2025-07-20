@@ -3105,6 +3105,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mower
       objectReference: {fileID: 0}
+    - target: {fileID: 6887101334015280706, guid: c1c317a50f1bb4439b6d19d65c02be3c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7813604074570862448, guid: c1c317a50f1bb4439b6d19d65c02be3c, type: 3}
       propertyPath: mowerPrefab
       value: 
