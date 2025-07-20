@@ -17,6 +17,7 @@ public class lawnmower_runner : MonoBehaviour
     public float spinspeed = 2;
     public LineRenderer randy;
     public bool paused = false;
+    public BreakPart[] wheels;
 
     public void pause(){
         body.AddForce(-body.velocity);
@@ -161,6 +162,14 @@ public class lawnmower_runner : MonoBehaviour
             else
             {
                 nearest_plug = null;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.R)){
+            for (int i = 0; i < wheels.Length; ++i){
+                if (wheels[i] == null){
+                    continue;
+                }
+                wheels[i].combust = true;
             }
         }
         

@@ -8,6 +8,7 @@ public class BreakPart : MonoBehaviour
     private float forceStrength = 5f;
     private bool hasBroken = false;
     private float originalThickness = 1f;
+    public bool combust = false;
 
     void Awake()
     {
@@ -39,7 +40,14 @@ public class BreakPart : MonoBehaviour
 
         }
     }
-
+    void Update(){
+        if (combust && !hasBroken){
+            combust = false;
+            Debug.Log("breaking off");
+            hasBroken = true;
+            BreakOff();
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         if (SceneManager.GetActiveScene().name != "RunMower") return;

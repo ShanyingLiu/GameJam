@@ -239,6 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakChance: 0.4
   partStrength: 0
+  combust: 0
 --- !u!1 &6887101334015280706
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +420,11 @@ MonoBehaviour:
   spinspeed: 2
   randy: {fileID: 6848809745862344989}
   paused: 0
+  wheels:
+  - {fileID: 3481158937963244758}
+  - {fileID: 882468028290793464}
+  - {fileID: 6268672331834557960}
+  - {fileID: 5445289950569217809}
 --- !u!120 &6848809745862344989
 LineRenderer:
   serializedVersion: 2
@@ -5667,6 +5673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakChance: 0.4
   partStrength: 0
+  combust: 0
 --- !u!4 &783110100720722923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d3aaa583129c4ae491bdcf6ca5f5a11, type: 3}
@@ -5800,6 +5807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakChance: 0.4
   partStrength: 0
+  combust: 0
 --- !u!1001 &2698056900064004894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6022,6 +6030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakChance: 0.4
   partStrength: 0
+  combust: 0
 --- !u!4 &3222312718895721411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d3aaa583129c4ae491bdcf6ca5f5a11, type: 3}
@@ -6155,6 +6164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakChance: 0.4
   partStrength: 0
+  combust: 0
 --- !u!1001 &5438538528440353531
 PrefabInstance:
   m_ObjectHideFlags: 0

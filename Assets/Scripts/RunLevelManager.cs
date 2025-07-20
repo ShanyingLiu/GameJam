@@ -88,6 +88,7 @@ public class RunLevelManager : MonoBehaviour
         }
 
         UpdateBreakChances();
+        CheckMowerChildrenAndEnd();
     }
 
     private void UpdateBreakChances()
