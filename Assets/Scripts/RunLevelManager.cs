@@ -13,10 +13,13 @@ public class RunLevelManager : MonoBehaviour
     public TextMeshProUGUI AreaCovered;
     public TextMeshProUGUI MoneyEarned;
     public GameObject EndScreen;
+    public GameObject CreationButton;
+    public GameObject TimerBackground;
+
 
     private int currentLevelIndex = 0;
     private float elapsedTime = 0f;
-    private bool ended = false;
+    private bool ended = true;
 
     private GameObject mowerRoot;
     private Rigidbody mowerRigidbody;
@@ -35,14 +38,22 @@ public class RunLevelManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
         elapsedTime = 0f;
         ended = false;
         FindMowerRoot();
         CancelInvoke(nameof(CheckMowerChildrenAndEnd));
         if (scene.name == "RunMower")
         {
+            CreationButton.SetActive(false);
+            TimerBackground.SetActive(true);
             InvokeRepeating(nameof(CheckMowerChildrenAndEnd), checkInterval, checkInterval);
         }
+    }
+
+    public void StartTimer()
+    {
+        ended = false;
     }
 
     void OnDestroy()
@@ -145,6 +156,8 @@ public class RunLevelManager : MonoBehaviour
             if (EndScreen != null)
             {
                 EndScreen.SetActive(true);
+                CreationButton.SetActive(true);
+                TimerBackground.SetActive(false);
             }
 
             if (mowerRoot != null)
