@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class BreakPart : MonoBehaviour
 {
-    public float breakChance = 0.4f; 
+    public float breakChance = 0.4f;
+    public float partStrength = 0.0f;
     private float forceStrength = 5f;
     private bool hasBroken = false;
 
@@ -31,7 +32,7 @@ public class BreakPart : MonoBehaviour
 
         if (other.gameObject.name == "Mower") return;
 
-        if (Random.value < breakChance)
+        if (Random.value < (breakChance - partStrength)) // if part is stronger it will be less likely to break
         {
             Debug.Log("breaking off");
             hasBroken = true;

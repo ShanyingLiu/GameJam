@@ -73,9 +73,9 @@
     <Compile Include="Assets/Scripts/MowerManager.cs" />
     <Compile Include="Assets/Scripts/DraggableObject.cs" />
     <Compile Include="Assets/Scripts/MenuControl.cs" />
+    <Compile Include="Assets/Scripts/areacovered.cs" />
     <Compile Include="Assets/Scripts/LawnMowerRunner.cs" />
     <Compile Include="Assets/Scripts/CameraManager.cs" />
-    <Compile Include="Assets/areacovered.cs" />
     <Compile Include="Assets/Scripts/sequence.cs" />
     <Compile Include="Assets/Scripts/levelselector.cs" />
   </ItemGroup>
