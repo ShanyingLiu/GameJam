@@ -7,7 +7,7 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     [HideInInspector] public GameObject prefabToSpawn;
     [HideInInspector] public Camera sceneCamera;
     public int price;
-    public GameObject errorBackground; // reference from MenuControl
+    public GameObject errorBackground;
 
     private GameObject mowerObject;
     private GameObject previewInstance;

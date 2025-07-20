@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RunMower.unity
     guid: ed2c9f8c7f241422cbd1d01b3979d434
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EndScreen.unity
     guid: ae63957b362304d9587eed07b6817e74
   m_configObjects: {}

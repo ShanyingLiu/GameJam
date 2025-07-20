@@ -33,8 +33,8 @@ public class BreakPart : MonoBehaviour
             {
                 TrailRenderer lr = mowerRoot.GetComponent<TrailRenderer>();
                 originalThickness = lr.startWidth;
-                lr.startWidth += 1.0f;
-                lr.endWidth += 1.0f;
+                lr.startWidth += 0.5f;
+                lr.endWidth += 0.5f;
 
             }
 

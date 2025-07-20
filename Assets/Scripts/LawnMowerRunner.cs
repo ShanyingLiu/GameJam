@@ -17,7 +17,7 @@ public class lawnmower_runner : MonoBehaviour
     public float spinspeed = 2;
     public LineRenderer randy;
     public bool paused = false;
-    public BreakPart[] wheels;
+    private BreakPart[] wheels;
 
     public void pause(){
         body.AddForce(-body.velocity);
@@ -36,6 +36,7 @@ public class lawnmower_runner : MonoBehaviour
 
     void Start()
     {
+        wheels = GameObject.FindObjectsOfType<BreakPart>();
         FindPlugs();
         body.velocity = new Vector3(-startspeed, 0, 0);
         if (plugs.Length > 0)
@@ -58,7 +59,11 @@ public class lawnmower_runner : MonoBehaviour
             nearest_plug = plugs[0];
         else
             nearest_plug = null;
+
+        // refresh wheels
+        wheels = GameObject.FindObjectsOfType<BreakPart>();
     }
+
 
     void FindPlugs()
     {

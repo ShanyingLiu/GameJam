@@ -155,8 +155,8 @@ public class RunLevelManager : MonoBehaviour
             if (MoneyEarned != null)
             {
                 var eventManager = FindObjectOfType<EventManager>();
-                int moneyEarned = (int)elapsedTime / 5;
-                moneyEarned += (int)areaCovered / 50 * 2;
+                int moneyEarned = (int) (areaCovered / elapsedTime);
+                //moneyEarned += (int)areaCovered / 50 * 2;
                 MoneyEarned.text = $"Funds Increased: ${moneyEarned}";
                 
                 if (eventManager != null)
@@ -237,15 +237,12 @@ public class RunLevelManager : MonoBehaviour
         DestroyImmediate(mowerRoot.transform.GetChild(0).gameObject);
     }
 
-    // Instantiate the prefab
     GameObject temp = Instantiate(mowerPrefab);
     temp.SetActive(true);
 
-    // Find the inner "mower" object in the instantiated prefab
-    Transform innerMower = temp.transform.Find("mower"); // Adjust name if different
+    Transform innerMower = temp.transform.Find("mower");
     if (innerMower == null)
     {
-        // If it's the first child, get it directly
         innerMower = temp.transform.GetChild(0);
         Debug.Log($"Using first child as inner mower: {innerMower.name}");
     }
@@ -254,7 +251,6 @@ public class RunLevelManager : MonoBehaviour
         Debug.Log($"Found inner mower: {innerMower.name}");
     }
 
-    // Move children from the INNER mower to our mowerRoot
     List<Transform> childrenToMove = new List<Transform>();
     foreach (Transform child in innerMower)
     {
