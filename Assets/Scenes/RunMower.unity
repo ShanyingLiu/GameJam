@@ -148,9 +148,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4694299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06a03e1fcb8674ba0965920132d8d22c, type: 3}
+  m_Script: {fileID: 11500000, guid: c4250f673ac7fbc42ada8f10de835d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size: 20
+  spacing: 1
+  area: 0
+  origin: {x: -5, y: -0.28, z: 2}
+  player:
+    serializedVersion: 2
+    m_Bits: 8
+  red: {fileID: 0}
+  white: {fileID: 0}
 --- !u!4 &4694301
 Transform:
   m_ObjectHideFlags: 0

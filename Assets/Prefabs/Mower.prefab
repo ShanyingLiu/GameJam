@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakChance: 0.4
+  partStrength: 0
 --- !u!1 &6887101334015280706
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +439,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eccb2066f037a4e0ca8ea8b415e961cd, type: 2}
+  - {fileID: 2100000, guid: b3b581dc451454cfd8d93720f45f45e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5664,6 +5665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakChance: 0.4
+  partStrength: 0
 --- !u!4 &783110100720722923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d3aaa583129c4ae491bdcf6ca5f5a11, type: 3}
@@ -5796,6 +5798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakChance: 0.4
+  partStrength: 0
 --- !u!1001 &2698056900064004894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6017,6 +6020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakChance: 0.4
+  partStrength: 0
 --- !u!4 &3222312718895721411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d3aaa583129c4ae491bdcf6ca5f5a11, type: 3}
@@ -6149,6 +6153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakChance: 0.4
+  partStrength: 0
 --- !u!1001 &5438538528440353531
 PrefabInstance:
   m_ObjectHideFlags: 0

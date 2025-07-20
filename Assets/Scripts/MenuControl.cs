@@ -12,12 +12,11 @@ public class MenuControl : MonoBehaviour
 
     [Header("UI References")]
     public GameObject buttonPrefab; 
-    public GameObject priceLabelPrefab; // TMP prefab
+    public GameObject priceLabelPrefab; 
     public Transform contentParent;
     public Camera sceneCamera;
-    public GameObject errorBackground; // Drag your ErrorBackground UI object here
-    public Button clearAllButton;     // Drag your ClearAll UI button here
-
+    public GameObject errorBackground; 
+    public Button clearAllButton; 
     void Start()
     {
         if (errorBackground != null)
@@ -29,7 +28,7 @@ public class MenuControl : MonoBehaviour
         PopulateMenu();
     }
 
-    void PopulateMenu()
+   void PopulateMenu()
     {
         if (prefabs.Count != prefabIcons.Count || prefabs.Count != prefabPrices.Count)
         {
@@ -42,16 +41,20 @@ public class MenuControl : MonoBehaviour
             GameObject container = new GameObject($"Item_{i}", typeof(RectTransform));
             container.transform.SetParent(contentParent, false);
 
+            RectTransform containerRect = container.GetComponent<RectTransform>();
+            containerRect.sizeDelta = new Vector2(275, 275); 
+
             VerticalLayoutGroup layout = container.AddComponent<VerticalLayoutGroup>();
             layout.childAlignment = TextAnchor.MiddleCenter;
             layout.spacing = 10;
-
-            ContentSizeFitter fitter = container.AddComponent<ContentSizeFitter>();
-            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            layout.padding = new RectOffset(10, 10, 10, 10); 
 
             GameObject newButtonObj = Instantiate(buttonPrefab, container.transform);
             Button newButton = newButtonObj.GetComponent<Button>();
             Image iconImage = newButtonObj.GetComponentInChildren<Image>();
+
+            RectTransform buttonRect = newButtonObj.GetComponent<RectTransform>();
+            buttonRect.sizeDelta = new Vector2(160, 80);
 
             if (iconImage != null)
             {
@@ -66,7 +69,7 @@ public class MenuControl : MonoBehaviour
             dragScript.prefabToSpawn = prefabs[i];
             dragScript.sceneCamera = sceneCamera;
             dragScript.price = prefabPrices[i];
-            dragScript.errorBackground = errorBackground; // pass the reference
+            dragScript.errorBackground = errorBackground;
 
             int index = i;
             newButton.onClick.AddListener(() => OnPrefabSelected(index));
