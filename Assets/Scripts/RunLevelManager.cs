@@ -3,11 +3,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
 public class RunLevelManager : MonoBehaviour
 {
+    public GameObject mowerPrefab;  
     public List<GameObject> levels;
     public TextMeshProUGUI timerDisplay;
     public TextMeshProUGUI EndTime;
+    public TextMeshProUGUI AreaCovered;
     public TextMeshProUGUI MoneyEarned;
     public GameObject EndScreen;
 
@@ -103,6 +106,8 @@ public class RunLevelManager : MonoBehaviour
 
         int count = CountAllChildren(mowerRoot.transform);
 
+
+
         if (count <= 8 && !ended)
         {
             ended = true;
@@ -111,10 +116,20 @@ public class RunLevelManager : MonoBehaviour
             {
                 EndTime.text = $"Your Time: {elapsedTime:F1}s";
             }
+            var areagetter = FindObjectOfType<areacovered>();
+            float areaCovered = 100;
 
+            if (areagetter != null) { areaCovered = areagetter.getscore(); }
+            Debug.Log(areaCovered);
+
+            if (AreaCovered != null)
+            {
+                AreaCovered.text = $"Area Covered: ${areaCovered}";
+            }
             if (MoneyEarned != null)
             {
                 int moneyEarned = (int)elapsedTime / 5 * 2;
+                moneyEarned += (int)areaCovered / 100 * 2;
                 MoneyEarned.text = $"Funds Increased: ${moneyEarned}";
                 var eventManager = FindObjectOfType<EventManager>();
                 if (eventManager != null)
@@ -131,6 +146,7 @@ public class RunLevelManager : MonoBehaviour
             {
                 EndScreen.SetActive(true);
             }
+
             if (mowerRoot != null)
             {
                 var runner = mowerRoot.GetComponent<lawnmower_runner>();
@@ -140,8 +156,10 @@ public class RunLevelManager : MonoBehaviour
                 }
             }
 
+            RefreshMowerChildrenFromPrefab();
 
-            
+
+
         }
     }
 
@@ -173,5 +191,41 @@ public class RunLevelManager : MonoBehaviour
             if (levels[i] != null)
                 levels[i].SetActive(i == currentLevelIndex);
         }
+    }
+    private void RefreshMowerChildrenFromPrefab()
+    {
+    FindMowerRoot();
+    if (mowerPrefab == null || mowerRoot == null)
+    {
+        return;
+    }
+
+    while (mowerRoot.transform.childCount > 0)
+    {
+        DestroyImmediate(mowerRoot.transform.GetChild(0).gameObject);
+    }
+
+    GameObject temp = Instantiate(mowerPrefab);
+    temp.SetActive(true);
+
+    Transform innerMower = temp.transform.Find("mower");
+    if (innerMower == null)
+    {
+        innerMower = temp.transform.GetChild(0);
+    }
+
+    List<Transform> childrenToMove = new List<Transform>();
+    foreach (Transform child in innerMower)
+    {
+        childrenToMove.Add(child);
+    }
+
+    foreach (Transform child in childrenToMove)
+    {
+        child.SetParent(mowerRoot.transform, false);
+        child.gameObject.SetActive(true);
+    }
+
+    DestroyImmediate(temp);
     }
 }

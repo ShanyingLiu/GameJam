@@ -122,6 +122,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &4694299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4694301}
+  - component: {fileID: 4694300}
+  m_Layer: 0
+  m_Name: AreaCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &4694300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a03e1fcb8674ba0965920132d8d22c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 0
+  spacing: 0
+  area: 0
+  origin: {x: -5, y: -0.28, z: 2}
+  player:
+    serializedVersion: 2
+    m_Bits: 0
+  red: {fileID: 0}
+--- !u!4 &4694301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1391813, y: 0.37759328, z: -8.798009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &13329816
 GameObject:
   m_ObjectHideFlags: 0
@@ -5163,11 +5215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f69225aaf9a241edb689f82c3a42cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mowerPrefab: {fileID: 6887101334015280706, guid: c1c317a50f1bb4439b6d19d65c02be3c, type: 3}
   levels:
   - {fileID: 928670161}
   - {fileID: 1375033398}
   timerDisplay: {fileID: 302399341}
   EndTime: {fileID: 242006700}
+  AreaCovered: {fileID: 1903126091}
   MoneyEarned: {fileID: 1385893201}
   EndScreen: {fileID: 171548868}
   initialBreakChance: 0.2
@@ -7478,3 +7532,4 @@ SceneRoots:
   - {fileID: 514274467}
   - {fileID: 1356219295}
   - {fileID: 1433498109}
+  - {fileID: 4694301}
